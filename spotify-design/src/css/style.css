@@ -1,0 +1,462 @@
+:root {
+  --padding: 10px 20px;
+  --radius: 10px;
+  --background: #181818;
+  --effect: all 0.5s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.container aside {
+  width: 20%;
+  height: 100vh;
+  background-color: #000000;
+  padding: var(--padding);
+}
+
+.container aside .menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container aside .menu a {
+  text-decoration: none;
+  padding: 10px 1rem;
+  color: #c5c5c5;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.container aside .menu a span {
+  margin-right: 8px;
+}
+
+.container aside .menu a span.spotify_text {
+  font-size: 26px;
+}
+
+.container aside .menu a.active {
+  background-color: #282828;
+  border-radius: 5px;
+  color: #ffffff;
+}
+
+.container aside .menu a:hover {
+  color: #ffffff;
+}
+
+.container section {
+  width: 80%;
+  height: 100vh;
+  color: #ffffff;
+  background-color: var(--background);
+  overflow-y: scroll;
+  padding-bottom: 5rem;
+}
+
+.container section::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.container section::-webkit-scrollbar:vertical {
+  width: 7px;
+}
+
+.container section::-webkit-scrollbar-thumb {
+  background-color: #797979;
+}
+
+.container section header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  padding: var(--padding);
+  width: 80%;
+  background-color: #505053;
+  z-index: 2;
+}
+
+.container section header .prev_next_buttons,
+.container section header .subscription {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container section header .prev_next_buttons span {
+  cursor: pointer;
+}
+
+.container section header .prev_next_buttons span.btn_prev {
+  margin-right: 1em;
+}
+
+.container section header .subscription .upgrade_account {
+  margin-right: 1.5em;
+}
+
+.container section header .subscription .upgrade_account button {
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  width: 250px;
+  padding: 0.8em 0;
+  color: #ffffff;
+  border-radius: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.container section header .subscription .upgrade_account button:hover {
+  transform: scale(1.1);
+}
+
+.container section header .subscription .profile {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #000000;
+  width: auto;
+  padding: 0.4em 5px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.container section header .subscription .profile .circle {
+  background-color: #333333;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle,
+.name {
+  margin-right: 5px;
+}
+
+.container section .gradient_container,
+.container section .content_container {
+  padding: var(--padding);
+}
+
+.container section .gradient_container {
+  background: linear-gradient(#505053, #181818);
+  width: 100%;
+  margin-top: 61px;
+}
+
+.container section .gradient_container .banner {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../assets/images/banner.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+}
+
+.container section .gradient_container .banner .song {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  overflow: hidden;
+  margin: 1em;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+}
+
+.container section .gradient_container .banner .song figure {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: var(--effect);
+}
+
+.container section .gradient_container .banner .song figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container section .gradient_container .banner .song figure:hover:before {
+  position: absolute;
+  content: '';
+  background-color: rgba(0, 0, 0, 0.286);
+  width: 100%;
+  height: 100%;
+}
+
+.container section .gradient_container .banner .song figure:hover:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-image: url(../assets/images/play.svg);
+  background-position: center;
+  background-size: cover;
+  width: 48px;
+  height: 48px;
+  background-repeat: no-repeat;
+}
+
+.container section .gradient_container .banner .song figure:hover {
+  width: 100%;
+  transform: scale(1.2);
+}
+
+.container .content_container .titles {
+  text-align: start;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.container section .content_container .genres,
+.container section .content_container .playlist {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.container section .content_container .genres .cards {
+  transition: var(--effect);
+  flex-basis: calc((100% / 3) - 20px);
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #282828;
+  cursor: pointer;
+  border-radius: var(--radius);
+  margin: 10px;
+}
+
+.container section .content_container .genres .cards .card_image {
+  width: 80px;
+  height: 80px;
+}
+
+.container section .content_container .genres .cards .card_image img {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+  object-fit: cover;
+}
+
+.container section .content_container .genres .cards .card_text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: calc(100% - 80px);
+}
+
+.container section .content_container .genres .cards .card_text img {
+  opacity: 0;
+}
+
+.container section .content_container .genres .cards:hover {
+  background: linear-gradient(#666666, #474747);
+}
+
+.container section .content_container .genres .cards:hover img {
+  opacity: 1;
+  transition: var(--effect);
+}
+
+.container section .content_container .playlist .playlist_card {
+  transition: var(--effect);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-basis: calc((100% / 4) - 20px);
+  margin: 10px;
+  background-color: #181818;
+  padding: 1em;
+  cursor: pointer;
+  border-radius: var(--radius);
+}
+
+.container section .content_container .playlist .playlist_card:hover {
+  background-color: #282828;
+}
+
+.container section .content_container .playlist .playlist_card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container section .content_container .playlist .playlist_card:hover img {
+  box-shadow: 5px 4px 10px hsl(0, 0%, 11%);
+}
+
+.container section .content_container .playlist .playlist_card h4 {
+  margin-top: 1em;
+}
+
+.container footer {
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  padding: var(--padding);
+  border-top: 1px solid #282828;
+  color: #ffffff;
+}
+
+.audio-player {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #282828;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 50px;
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+}
+
+.track-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 5px;
+}
+
+.track-details {
+  margin-top: 5px;
+  margin: 10px;
+}
+
+.track-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+.artist-name {
+  font-size: 14px;
+  margin: 0;
+}
+
+audio {
+  width: 100%;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: #282828;
+  color: #ffffff;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-timeline,
+audio::-webkit-media-controls-volume-slider {
+  background-color: #666;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display,
+audio::-webkit-media-controls-time-remaining-display,
+audio::-webkit-media-controls-timeline,
+audio::-webkit-media-controls-fullscreen-button,
+audio::-webkit-media-controls-volume-slider {
+  color: #ffffff;
+}
+
+audio::-webkit-media-controls-seek-back-button,
+audio::-webkit-media-controls-seek-forward-button,
+audio::-webkit-media-controls-volume-slider {
+  opacity: 0.8;
+}
+
+audio::-webkit-media-controls-seek-back-button:hover,
+audio::-webkit-media-controls-seek-forward-button:hover,
+audio::-webkit-media-controls-volume-slider:hover {
+  opacity: 1;
+}
+
+/* Responsive Mobile */
+@media screen and (max-width: 900px) {
+  .sidebar_text {
+    display: none;
+  }
+
+  .spotify_text {
+    display: none;
+  }
+
+  .menu {
+    align-items: center;
+  }
+
+  .container section .gradient_container {
+    display: grid;
+    overflow: auto;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+  }
+
+  .container section header .subscription .upgrade_account button {
+    width: 150px;
+    margin-left: 20px;
+    font-size: 12px;
+  }
+
+  .container section header .subscription .profile {
+    padding: 0.3em 3px;
+  }
+
+  .container section .content_container .playlist .playlist_card img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .container section header {
+    overflow: auto;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+  }
+}
