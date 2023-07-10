@@ -177,7 +177,7 @@ body {
 }
 
 .container section .gradient_container {
-  background: linear-gradient(--color-gray, --color-light-black);
+  background: linear-gradient(var(--color-gray), var(--color-light-black));
   width: 100%;
   margin-top: 61px;
 }
@@ -437,10 +437,7 @@ audio::-webkit-media-controls-volume-slider:hover {
 
 /* Responsive Mobile */
 @media screen and (max-width: 900px) {
-  .sidebar_text {
-    display: none;
-  }
-
+  .sidebar_text,
   .spotify_text {
     display: none;
   }
