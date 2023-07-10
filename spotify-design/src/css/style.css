@@ -407,6 +407,18 @@ audio::-webkit-media-controls-panel {
   color: var(--color-white);
 }
 
+audio::-webkit-media-controls-play-button {
+  border-radius: 50px;
+}
+
+audio::-webkit-media-controls-mute-button {
+  border-radius: 0px 25px 25px 0px;
+}
+
+audio::-webkit-media-controls-timeline {
+  border-radius: 25px 0px 0px 25px;
+}
+
 audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-mute-button,
 audio::-webkit-media-controls-timeline,
