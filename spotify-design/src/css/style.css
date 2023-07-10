@@ -449,12 +449,12 @@ audio::-webkit-media-controls-volume-slider:hover {
 
 /* Responsive Mobile */
 @media screen and (max-width: 900px) {
-  .sidebar_text,
-  .spotify_text {
+  .container .menu a .sidebar_text,
+  .container .menu a .spotify_text {
     display: none;
   }
 
-  .menu {
+  .container .menu {
     align-items: center;
   }
 
