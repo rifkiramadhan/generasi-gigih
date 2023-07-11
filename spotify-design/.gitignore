@@ -1,7 +1,3 @@
 /src/js/async-await.js
 /src/js/fetch-api-async-await.js
-# Mengecualikan file MP3 di dalam folder /src/assets/audio/
-/src/assets/audio/*.mp3
-
-# Memasukkan file ZIP di dalam folder /src/assets/audio/
-!/src/assets/audio/*.zip
+/src/assets/audio/
