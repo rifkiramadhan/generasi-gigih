@@ -4,12 +4,15 @@
   "description": "Hello World",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rifki Ramadhan",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.3.3",
+    "nodemon": "^3.0.1"
   }
 }
