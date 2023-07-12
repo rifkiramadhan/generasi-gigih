@@ -17,7 +17,7 @@
       <!-- Aside Start -->
       <aside>
         <div class="menu">
-          <a href="#" class="menu-item">
+          <a href="#">
             <span>
               <img
                 src="./src/assets/icons/spotify-icon.png"
@@ -27,32 +27,32 @@
             </span>
             <span class="spotify_text">Spotify</span>
           </a>
-          <a href="#" class="menu-item active">
+          <a class="active" href="#">
             <span>
               <img src="./src/assets/images/home.svg" alt="" />
             </span>
             <span class="sidebar_text">Home</span>
           </a>
-          <a href="#" class="menu-item">
+          <a href="#">
             <span>
               <img src="./src/assets/images/search.svg" alt="" />
             </span>
             <span class="sidebar_text">Search</span>
           </a>
-          <a href="#" class="menu-item">
+          <a href="#">
             <span>
               <img src="./src/assets/images/library.svg" alt="" />
             </span>
             <span class="sidebar_text">Collection</span>
           </a>
           <br />
-          <a href="#" class="menu-item" id="openModalBtn">
+          <a href="#">
             <span>
               <img src="./src/assets/images/add.svg" alt="" />
             </span>
             <span class="sidebar_text">Create List</span>
           </a>
-          <a href="#" class="menu-item">
+          <a href="#">
             <span>
               <img src="./src/assets/images/heart.svg" alt="" />
             </span>
@@ -142,29 +142,6 @@
     </div>
     <!-- Container End -->
 
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <form
-          id="playlistForm"
-          action="http://localhost:3000/playlist/add"
-          method="POST"
-        >
-          <label for="image">Image:</label>
-          <input type="text" id="image" name="image" required />
-          <br />
-          <label for="title">Judul Lagu:</label>
-          <input type="text" id="title" name="title" required />
-          <label for="artists">Artist:</label>
-          <input type="text" id="artists" name="artists" required />
-          <label for="url">Music:</label>
-          <input type="text" id="url" name="url" required />
-          <br />
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    </div>
-
-    <script src="./src/js/fetch-api-add-songs.js"></script>
+    <script src="./src/js/fetch-api-songs.js"></script>
   </body>
 </html>

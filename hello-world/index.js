@@ -4,14 +4,21 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
+app.use(express.json());
 
 app.use((req, res, next) => {
   req.url = req.url.toUpperCase();
   next();
 });
 
-const playlist = require('./data.json').playlist;
-const songs = require('./data.json').songs;
+const data = require('./data.json');
+const playlist = Array.isArray(data.playlist) ? data.playlist : [];
+const songs = data.songs;
+const banners = data.playlist;
+
+app.get('/banners', (req, res) => {
+  res.json(banners);
+});
 
 app.get('/playlist', (req, res) => {
   res.json(playlist);
@@ -21,12 +28,21 @@ app.get('/songs', (req, res) => {
   res.json(songs);
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
+app.post('/playlist/add', (req, res) => {
+  const { image, title, artists, url } = req.body;
+  const newSong = { image, title, artists, url };
+  playlist.push(newSong);
+  res.json({ message: 'Song added to playlist', song: newSong });
 });
 
-app.use((req, res) => {
-  res.status(404).send('Page Not Found');
+app.get('/playlist/play/:index', (req, res) => {
+  const index = parseInt(req.params.index);
+  if (index >= 0 && index < playlist.length) {
+    const song = playlist[index];
+    res.json({ message: 'Playing song', song });
+  } else {
+    res.status(404).json({ message: 'Song not found' });
+  }
 });
 
 app.listen(port, () => {
