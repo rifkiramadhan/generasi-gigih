@@ -14,14 +14,14 @@ app.use((req, res, next) => {
 const data = require('./data.json');
 const playlist = Array.isArray(data.playlist) ? data.playlist : [];
 const songs = data.songs;
-const banners = data.playlist;
-
-app.get('/banners', (req, res) => {
-  res.json(banners);
-});
+const otherPlaylist = data.playlist;
 
 app.get('/playlist', (req, res) => {
   res.json(playlist);
+});
+
+app.get('/playlist/other-playlist', (req, res) => {
+  res.json(otherPlaylist);
 });
 
 app.get('/songs', (req, res) => {

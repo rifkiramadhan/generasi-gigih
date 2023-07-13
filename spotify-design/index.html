@@ -33,7 +33,7 @@
             </span>
             <span class="sidebar_text">Home</span>
           </a>
-          <a href="#" class="menu-item">
+          <a href="#" class="menu-item menu-search">
             <span>
               <img src="./src/assets/images/search.svg" alt="" />
             </span>
@@ -75,6 +75,17 @@
             </span>
           </div>
 
+          <form class="search-form" id="searchPlaylistForm">
+            <input
+              type="text"
+              id="searchPlaylistInput"
+              placeholder="Apa yang ingin kamu dengarkan?"
+            />
+            <button id="searchButton">
+              <img src="./src/assets/images/search.svg" alt="Search" />
+            </button>
+          </form>
+
           <div class="subscription">
             <div class="upgrade_account">
               <button>Upgrade Your Account</button>
@@ -98,9 +109,14 @@
 
         <article class="content_container">
           <div class="titles">
-            <h1>Spotify Playlist</h1>
+            <h2>Your Playlist</h2>
           </div>
-          <div class="genres"></div>
+          <div class="genres" id="yourPlaylist"></div>
+
+          <div class="titles">
+            <h2>Spotify Playlist</h2>
+          </div>
+          <div class="genres" id="genres"></div>
 
           <div class="titles">
             <h2>Work</h2>
@@ -153,14 +169,14 @@
           <label for="image">Image:</label>
           <input type="text" id="image" name="image" required />
           <br />
-          <label for="title">Judul Lagu:</label>
-          <input type="text" id="title" name="title" required />
           <label for="artists">Artist:</label>
           <input type="text" id="artists" name="artists" required />
-          <label for="url">Music:</label>
+          <label for="title">Judul Music:</label>
+          <input type="text" id="title" name="title" required />
+          <label for="url">Url Music (.mp3):</label>
           <input type="text" id="url" name="url" required />
           <br />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Add to Playlist" />
         </form>
       </div>
     </div>
