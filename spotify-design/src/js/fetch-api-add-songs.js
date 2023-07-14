@@ -1,3 +1,4 @@
+// Mencetak paragraf baru ketika daftar Your Playlist masih kosong
 const displayEmptyPlaylist = () => {
   const playlistContainer = document.querySelector('#yourPlaylist');
   playlistContainer.innerHTML = '';
