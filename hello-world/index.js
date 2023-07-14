@@ -16,6 +16,15 @@ const playlist = Array.isArray(data.playlist) ? data.playlist : [];
 const songs = data.songs;
 const otherPlaylist = data.playlist;
 
+app.get('/playlist/filter', (req, res) => {
+  const { artist } = req.query;
+  const filteredPlaylist = playlist.filter(
+    (song) =>
+      song.artists && song.artists.toLowerCase().includes(artist.toLowerCase())
+  );
+  res.json(filteredPlaylist);
+});
+
 app.get('/playlist', (req, res) => {
   res.json(playlist);
 });

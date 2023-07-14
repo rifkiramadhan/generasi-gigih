@@ -1,0 +1,47 @@
+===== DAFTAR LAGU YOUR PLAYLIST =====
+
+1. - Gambar	: https://i.scdn.co/image/ab6761610000e5eb604493f4d58b7d152a2d5f79
+   - Artist	: Anggi Marito
+   - Judul Lagu	: Tak Segampang Itu
+   - URL	: ./src/assets/audio/amarito-tsi.mp3
+
+2. - Gambar     : https://seed-mix-image.spotifycdn.com/v6/img/artist/2A7XpBQ8X227lVi5BphdPw/en/default
+   - Artist	: Awdella
+   - Judul Lagu	: Tertawan Hati
+   - URL	: ./src/assets/audio/awdella-thati.mp3
+
+3. - Gambar	: https://i.scdn.co/image/ab67616d0000b27324aad75b1955e311f13cec5c
+   - Artist	: Mahalini
+   - Judul Lagu	: Melawan Restu
+   - URL	: ./src/assets/audio/mahalini-mrestu.mp3
+
+4. - Gambar	: https://i.scdn.co/image/ab67616d0000b2730c471c36970b9406233842a5
+   - Artist	: SZA
+   - Judul Lagu	: Kill Bill
+   - URL	: ./src/assets/audio/sza-killbill.mp3
+
+5. - Gambar	: https://i.scdn.co/image/ab67616d00001e020f77b506b28aa892702cc101
+   - Artist	: Jamie Miller
+   - Judul Lagu	: Here's Your Perfect
+   - URL	: ./src/assets/audio/jmiller-hyp.mp3
+
+6. - Gambar	: https://i.scdn.co/image/ab67706f00000002b0c066c63921e8d43068982c
+   - Artist	: Taylor Swift
+   - Judul Lagu	: Fearless
+   - URL	: ./src/assets/audio/tswift-fearless.mp3
+
+
+7. - Gambar	: https://i.scdn.co/image/ab6761610000e5eb8ae7f2aaa9817a704a87ea36
+   - Artist	: Justin Bieber
+   - Judul Lagu	: Ghost
+   - URL	: ./src/assets/audio/jbieber-ghost.mp3
+
+8. - Gambar	: https://i.scdn.co/image/ab6761610000e5eb564e80739956f888f879a5cb
+   - Artist	: Keisya Levronka
+   - Judul Lagu	: Tak Ingin Usai
+   - URL	: ./src/assets/audio/klevronka-tiu.mp3
+
+9. - Gambar	: https://i.scdn.co/image/ab67616d00001e0259605b76ee27d2c5ffac5d26
+   - Artist	: Soegi Bornean
+   - Judul Lagu	: Asmalibrasi
+   - URL	: ./src/assets/audio/sbornean-asmalibrasi.mp3

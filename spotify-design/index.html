@@ -80,6 +80,7 @@
               type="text"
               id="searchPlaylistInput"
               placeholder="Apa yang ingin kamu dengarkan?"
+              autocomplete="off"
             />
             <button id="searchButton">
               <img src="./src/assets/images/search.svg" alt="Search" />
@@ -166,15 +167,33 @@
           action="http://localhost:3000/playlist/add"
           method="POST"
         >
-          <label for="image">Image:</label>
-          <input type="text" id="image" name="image" required />
+          <label for="image">Url Foto:</label>
+          <input
+            type="text"
+            id="image"
+            name="image"
+            autocomplete="off"
+            required
+          />
           <br />
-          <label for="artists">Artist:</label>
-          <input type="text" id="artists" name="artists" required />
+          <label for="artists">Nama Artist:</label>
+          <input
+            type="text"
+            id="artists"
+            name="artists"
+            autocomplete="off"
+            required
+          />
           <label for="title">Judul Music:</label>
-          <input type="text" id="title" name="title" required />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            autocomplete="off"
+            required
+          />
           <label for="url">Url Music (.mp3):</label>
-          <input type="text" id="url" name="url" required />
+          <input type="text" id="url" name="url" autocomplete="off" required />
           <br />
           <input type="submit" value="Add to Playlist" />
         </form>

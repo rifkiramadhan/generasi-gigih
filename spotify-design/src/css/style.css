@@ -424,7 +424,7 @@ audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-mute-button,
 audio::-webkit-media-controls-timeline,
 audio::-webkit-media-controls-volume-slider {
-  background-color: var(--color-light-greenish-grey);
+  background-color: var(--color-green);
 }
 
 audio::-webkit-media-controls-current-time-display,
@@ -467,7 +467,7 @@ audio::-webkit-media-controls-volume-slider:hover {
   margin: 0px;
   background: var(--color-dark-gray);
   color: var(--color-white);
-  width: 600px;
+  width: 500px;
 }
 
 .search-form button {
