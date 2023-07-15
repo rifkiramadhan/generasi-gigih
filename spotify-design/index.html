@@ -81,6 +81,7 @@
               id="searchPlaylistInput"
               placeholder="Apa yang ingin kamu dengarkan?"
               autocomplete="off"
+              autofocus
             />
             <button id="searchButton">
               <img src="./src/assets/images/search.svg" alt="Search" />
@@ -159,6 +160,7 @@
     </div>
     <!-- Container End -->
 
+    <!-- Modal Start -->
     <div id="modal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -195,10 +197,17 @@
           <label for="url">Url Music (.mp3):</label>
           <input type="text" id="url" name="url" autocomplete="off" required />
           <br />
-          <input type="submit" value="Add to Playlist" />
+          <input type="submit" value="+ Add to Playlist" />
         </form>
       </div>
     </div>
+    <!-- Modal End -->
+
+    <!-- Loading Start -->
+    <div id="loading" class="loading">
+      <img src="./src/assets/icons/loading.gif" alt="Loading" />
+    </div>
+    <!-- Loading End -->
 
     <script src="./src/js/fetch-api-add-songs.js"></script>
   </body>

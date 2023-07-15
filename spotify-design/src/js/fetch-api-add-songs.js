@@ -1,5 +1,5 @@
-// Mencetak paragraf baru ketika daftar Your Playlist masih kosong
-const displayEmptyPlaylist = () => {
+// Fungsi untuk membuat Paragraf Daftar playlist Kosong
+const createEmptyPlaylist = () => {
   const playlistContainer = document.querySelector('#yourPlaylist');
   playlistContainer.innerHTML = '';
 
@@ -8,74 +8,114 @@ const displayEmptyPlaylist = () => {
   playlistContainer.appendChild(emptyMessage);
 };
 
-// Display pada Your Playlist setelah playlist dibuat pada form modal
-const displayOtherPlaylistCard = (other_playlist_card) => {
+// Fungsi uk mmbuat other card playlist
+const createOtherPlaylistCard = (otherPlaylistCard) => {
   const playlistCard = document.createElement('div');
   playlistCard.className = 'cards';
   playlistCard.innerHTML = `
     <div class="card_image">
-      <img src="${other_playlist_card.image}" alt="" />
+      <img src="${otherPlaylistCard.image}" alt="" />
     </div>
     <div class="card_text">
-      <h4>${other_playlist_card.artists}</h4>
+      <h4>${otherPlaylistCard.artists}</h4>
       <img src="./src/assets/images/play.svg" alt="" />
     </div>
   `;
   return playlistCard;
 };
 
-// Display pada Spotify Playlist dari data hard code yang sudah eksis
-const displayGenresPlaylistCard = (genres_playlist_card) => {
+// Fungsi untuk membuat gendres playlist card
+const createGenresPlaylistCard = (genresPlaylistCard) => {
   const playlistGenresCard = document.createElement('div');
   playlistGenresCard.className = 'cards';
   playlistGenresCard.innerHTML = `
     <div class="card_image">
-      <img src="${genres_playlist_card.image}" alt="" />
+      <img src="${genresPlaylistCard.image}" alt="" />
     </div>
     <div class="card_text">
-      <h4>${genres_playlist_card.artist}</h4>
+      <h4>${genresPlaylistCard.artist}</h4>
       <img src="./src/assets/images/play.svg" alt="" />
     </div>
   `;
   return playlistGenresCard;
 };
 
-// Display pada Spotify Playlist dari data hard code yang sudah eksis
-const displayWorkCard = (work_card) => {
-  const workCard = document.createElement('div');
-  workCard.className = 'playlist_card';
-  workCard.innerHTML = `
-    <img src="${work_card.image}" alt="" />
-    <h4>${work_card.title}</h4>
-    <p>${work_card.description}</p>
+// Fungsi untuk membuat work card
+const createWorkCard = (workCard) => {
+  const workPlaylistCard = document.createElement('div');
+  workPlaylistCard.className = 'playlist_card';
+  workPlaylistCard.innerHTML = `
+    <img src="${workCard.image}" alt="" />
+    <h4>${workCard.title}</h4>
+    <p>${workCard.description}</p>
   `;
-  return workCard;
+  return workPlaylistCard;
 };
 
-// Display pada Sleep Playlist dari data hard code yang sudah eksis
-const displaySleepCard = (sleep_card) => {
-  const sleepCard = document.createElement('div');
-  sleepCard.className = 'playlist_card';
-  sleepCard.innerHTML = `
-    <img src="${sleep_card.image}" alt="" />
-    <h4>${sleep_card.title}</h4>
-    <p>${sleep_card.description}</p>
+// Fungsi untuk membuat sleep card
+const createSleepCard = (sleepCard) => {
+  const sleepPlaylistCard = document.createElement('div');
+  sleepPlaylistCard.className = 'playlist_card';
+  sleepPlaylistCard.innerHTML = `
+    <img src="${sleepCard.image}" alt="" />
+    <h4>${sleepCard.title}</h4>
+    <p>${sleepCard.description}</p>
   `;
-  return sleepCard;
+  return sleepPlaylistCard;
 };
 
-// Fungsi Untuk Mengambil Data Untuk Playlist Card
-const displayPlaylistCard = () => {
+// fungsi untuk menambah count playlist song dari Your Playlist
+const playPlaylistSong = (index) => {
+  if (index === undefined) {
+    console.error('Invalid song index');
+    return;
+  }
+
+  fetch(`http://localhost:3000/playlist/play/${index}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message === 'Music Tidak Ditemukan') {
+        console.log('Music Tidak Ditemukan');
+      } else {
+        console.log('Music Dimainkan:', data);
+
+        // Update play count dynamically
+        const playlistCards = document.querySelectorAll('.cards');
+        const playlistCard = playlistCards[index];
+        const playCount = playlistCard.querySelector('.play-count');
+
+        if (playCount) {
+          const newPlayCount = data.song.playCount;
+          playCount.textContent = `Diputar ${newPlayCount} Kali`;
+        }
+      }
+    })
+    .catch((error) => {
+      console.error('An error occurred while playing the song:', error);
+    });
+};
+
+// Fungsi untuk menampilkan Your Playlist card
+const getPlaylistCard = () => {
+  const loadingElement = document.getElementById('loading');
+  loadingElement.style.display = 'block';
+
   fetch('http://localhost:3000/playlist')
     .then((response) => response.json())
-    .then((display_playlist) => {
-      if (Array.isArray(display_playlist) && display_playlist.length > 0) {
+    .then((displayPlaylist) => {
+      if (Array.isArray(displayPlaylist) && displayPlaylist.length > 0) {
         const playlistContainer = document.querySelector('#yourPlaylist');
         playlistContainer.innerHTML = '';
 
-        display_playlist.forEach((item) => {
-          const playlistCard = displayOtherPlaylistCard(item);
+        displayPlaylist.forEach((item, index) => {
+          const playlistCard = createOtherPlaylistCard(item);
           playlistContainer.appendChild(playlistCard);
+
+          // Menambahkan count diputar ke Your Playlist card
+          const playCount = document.createElement('p');
+          playCount.className = 'play-count';
+          playCount.textContent = `Diputar ${item.playCount} Kali`;
+          playlistCard.appendChild(playCount);
 
           playlistCard.addEventListener('click', () => {
             const audioPlayer = document.getElementById('audioPlayer');
@@ -98,10 +138,15 @@ const displayPlaylistCard = () => {
             audioPlayer.appendChild(sourceElement);
 
             audioPlayer.play();
+            playPlaylistSong(index); // Call playPlaylistSong function to play the song with a specific index
           });
         });
+
+        loadingElement.style.display = 'none';
       } else {
-        displayEmptyPlaylist();
+        createEmptyPlaylist();
+
+        loadingElement.style.display = 'none';
       }
     })
     .catch((error) => {
@@ -109,14 +154,17 @@ const displayPlaylistCard = () => {
     });
 };
 
-// Fungsi Untuk Mengambil Data Untuk Banner dan Other Playlist Card
-const displayBannersAndOtherPlaylistCard = () => {
+// Fungsi untuk menampilkan Banner dan Other Playlist
+const getBannersAndOtherPlaylistCard = () => {
+  const loadingElement = document.getElementById('loading');
+  loadingElement.style.display = 'block';
+
   fetch('http://localhost:3000/playlist/other-playlist')
     .then((response) => response.json())
-    .then((data_banners_playlists) => {
-      if (Array.isArray(data_banners_playlists.banners)) {
+    .then((data) => {
+      if (Array.isArray(data.banners)) {
         const bannerContainer = document.querySelector('.banner');
-        data_banners_playlists.banners.forEach((item) => {
+        data.banners.forEach((item) => {
           const bannerCard = document.createElement('div');
           bannerCard.className = 'song';
           bannerCard.innerHTML = `
@@ -128,12 +176,12 @@ const displayBannersAndOtherPlaylistCard = () => {
         });
       }
 
-      if (Array.isArray(data_banners_playlists.artists)) {
+      if (Array.isArray(data.artists)) {
         const playlistContainer = document.querySelector('#genres');
         playlistContainer.innerHTML = '';
 
-        data_banners_playlists.artists.forEach((item) => {
-          const playlistCard = displayGenresPlaylistCard(item);
+        data.artists.forEach((item) => {
+          const playlistCard = createGenresPlaylistCard(item);
           playlistContainer.appendChild(playlistCard);
 
           playlistCard.addEventListener('click', () => {
@@ -160,21 +208,27 @@ const displayBannersAndOtherPlaylistCard = () => {
           });
         });
       }
+
+      loadingElement.style.display = 'none';
     })
     .catch((error) => {
       console.error('Error displaying Spotify Playlist:', error.message);
+
+      loadingElement.style.display = 'none';
     });
 };
 
-// Fungsi Untuk Mengambil Data Untuk Work dan Sleep Card
-const displayWorkAndSleepSongsCard = () => {
+// Fungsi untuk menampilkan Sleep Songs card
+const getWorkAndSleepSongsCard = () => {
   fetch('http://localhost:3000/songs')
     .then((response) => response.json())
-    .then((work_sleep) => {
-      if (Array.isArray(work_sleep.work)) {
+    .then((workSleep) => {
+      if (Array.isArray(workSleep.work)) {
         const workContainer = document.getElementById('work');
-        work_sleep.work.forEach((item) => {
-          const workCard = displayWorkCard(item);
+        workContainer.innerHTML = '';
+
+        workSleep.work.forEach((item) => {
+          const workCard = createWorkCard(item);
           workContainer.appendChild(workCard);
 
           workCard.addEventListener('click', () => {
@@ -193,10 +247,12 @@ const displayWorkAndSleepSongsCard = () => {
         });
       }
 
-      if (Array.isArray(work_sleep.sleep)) {
+      if (Array.isArray(workSleep.sleep)) {
         const sleepContainer = document.getElementById('sleep');
-        work_sleep.sleep.forEach((item) => {
-          const sleepCard = displaySleepCard(item);
+        sleepContainer.innerHTML = '';
+
+        workSleep.sleep.forEach((item) => {
+          const sleepCard = createSleepCard(item);
           sleepContainer.appendChild(sleepCard);
 
           sleepCard.addEventListener('click', () => {
@@ -220,7 +276,7 @@ const displayWorkAndSleepSongsCard = () => {
     });
 };
 
-// Fungsi Untuk Mengambil Data Untuk Menambahkan Music Kedalam Your Playlist Dalam Bentuk Array
+// Fungsi untuk menambahkan data Your Playlist dari Modal
 const addPlaylistModal = (event) => {
   event.preventDefault();
 
@@ -242,8 +298,8 @@ const addPlaylistModal = (event) => {
     }),
   })
     .then((response) => {
-      console.log('Data berhasil dikirim');
-      displayPlaylistCard();
+      console.log('Data berhasil dikirim' + response);
+      getPlaylistCard();
 
       document.getElementById('image').value = '';
       document.getElementById('title').value = '';
@@ -257,7 +313,7 @@ const addPlaylistModal = (event) => {
   document.getElementById('modal').style.display = 'none';
 };
 
-// Fungsi Untuk Mencari Music Berdasarkan Nama Artis Dan Judul Lagu
+// Fungsi untuk mencari nama artis dan judul lagu
 const searchPlaylist = (event) => {
   event.preventDefault();
 
@@ -267,17 +323,17 @@ const searchPlaylist = (event) => {
 
   fetch('http://localhost:3000/playlist')
     .then((response) => response.json())
-    .then((display_playlist) => {
-      if (Array.isArray(display_playlist)) {
+    .then((displayPlaylist) => {
+      if (Array.isArray(displayPlaylist)) {
         const playlistContainer = document.querySelector('#yourPlaylist');
         playlistContainer.innerHTML = '';
 
-        display_playlist.forEach((item) => {
+        displayPlaylist.forEach((item) => {
           if (
             item.artists.toLowerCase().includes(searchTerm) ||
             item.title.toLowerCase().includes(searchTerm)
           ) {
-            const playlistCard = displayOtherPlaylistCard(item);
+            const playlistCard = createOtherPlaylistCard(item);
             playlistContainer.appendChild(playlistCard);
 
             playlistCard.addEventListener('click', () => {
@@ -312,17 +368,17 @@ const searchPlaylist = (event) => {
 
   fetch('http://localhost:3000/playlist/other-playlist')
     .then((response) => response.json())
-    .then((display_other_playlist) => {
-      if (Array.isArray(display_other_playlist.artists)) {
+    .then((displayOtherPlaylist) => {
+      if (Array.isArray(displayOtherPlaylist.artists)) {
         const playlistOtherContainer = document.querySelector('#genres');
         playlistOtherContainer.innerHTML = '';
 
-        display_other_playlist.artists.forEach((item) => {
+        displayOtherPlaylist.artists.forEach((item) => {
           if (
             item.artist.toLowerCase().includes(searchTerm) ||
             item.description.toLowerCase().includes(searchTerm)
           ) {
-            const playlistOtherCard = displayGenresPlaylistCard(item);
+            const playlistOtherCard = createGenresPlaylistCard(item);
             playlistOtherContainer.appendChild(playlistOtherCard);
 
             playlistOtherCard.addEventListener('click', () => {
@@ -357,17 +413,17 @@ const searchPlaylist = (event) => {
 
   fetch('http://localhost:3000/songs')
     .then((response) => response.json())
-    .then((work_sleep) => {
-      if (Array.isArray(work_sleep.work)) {
+    .then((workSleep) => {
+      if (Array.isArray(workSleep.work)) {
         const workContainer = document.getElementById('work');
         workContainer.innerHTML = '';
 
-        work_sleep.work.forEach((item) => {
+        workSleep.work.forEach((item) => {
           if (
             item.artist.toLowerCase().includes(searchTerm) ||
             item.title.toLowerCase().includes(searchTerm)
           ) {
-            const workCard = displayWorkCard(item);
+            const workCard = createWorkCard(item);
             workContainer.appendChild(workCard);
 
             workCard.addEventListener('click', () => {
@@ -387,16 +443,16 @@ const searchPlaylist = (event) => {
         });
       }
 
-      if (Array.isArray(work_sleep.sleep)) {
+      if (Array.isArray(workSleep.sleep)) {
         const sleepContainer = document.getElementById('sleep');
         sleepContainer.innerHTML = '';
 
-        work_sleep.sleep.forEach((item) => {
+        workSleep.sleep.forEach((item) => {
           if (
             item.artist.toLowerCase().includes(searchTerm) ||
             item.title.toLowerCase().includes(searchTerm)
           ) {
-            const sleepCard = displaySleepCard(item);
+            const sleepCard = createSleepCard(item);
             sleepContainer.appendChild(sleepCard);
 
             sleepCard.addEventListener('click', () => {
@@ -421,7 +477,7 @@ const searchPlaylist = (event) => {
     });
 };
 
-// Fungsi Untuk Membuat Menu Pada Sidebar Menjadi Aktif Setelah Diklik
+// Fungsi untuk mengaktifkan menu sidebar warna abu-abu
 const handleMenuItemClick = (event) => {
   const menuItem = event.target;
   const menuItems = document.querySelectorAll('.menu-item');
@@ -438,21 +494,24 @@ menuItems.forEach((menuItem) => {
   menuItem.addEventListener('click', handleMenuItemClick);
 });
 
-// Fungsi Untuk Membuka Modal Setelah Menu Create List Diklik
+// Fungsi untuk membuka form modal
 const openModal = () => {
   document.getElementById('modal').style.display = 'block';
 };
 
-// Fungsi Untuk Mengclose Modal
+// Fungsi untuk menutup form modal
 const closeModal = () => {
   document.getElementById('modal').style.display = 'none';
 };
 
-// Fungsi Untuk Menjalankan Fungsi-Fungsi Yang Akan Diload Dihalaman Browser
+// Fungsi untuk meload data dari setiap fungsi
 document.addEventListener('DOMContentLoaded', () => {
-  displayPlaylistCard();
-  displayBannersAndOtherPlaylistCard();
-  displayWorkAndSleepSongsCard();
+  const loadingElement = document.getElementById('loading');
+  loadingElement.style.display = 'block';
+
+  getPlaylistCard();
+  getBannersAndOtherPlaylistCard();
+  getWorkAndSleepSongsCard();
 
   document
     .getElementById('playlistForm')
@@ -465,4 +524,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document
     .getElementById('searchPlaylistForm')
     .addEventListener('submit', searchPlaylist);
+
+  loadingElement.style.display = 'none';
 });

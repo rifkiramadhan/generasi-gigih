@@ -1,2 +1,6 @@
 node_modules/
 index-mongoose.js
+
+models/
+routes/
+server.js

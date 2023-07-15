@@ -16,9 +16,36 @@ const playlist = Array.isArray(data.playlist) ? data.playlist : [];
 const songs = data.songs;
 const otherPlaylist = data.playlist;
 
+class Song {
+  constructor(image, title, artists, url) {
+    this.image = image;
+    this.title = title;
+    this.artists = artists;
+    this.url = url;
+    this.playCount = 0;
+  }
+}
+
+class Playlist {
+  constructor() {
+    this.songs = [];
+  }
+
+  addSong(image, title, artists, url) {
+    const newSong = new Song(image, title, artists, url);
+    this.songs.push(newSong);
+  }
+
+  getMostPlayedSongs() {
+    return this.songs.sort((a, b) => b.playCount - a.playCount);
+  }
+}
+
+const yourPlaylist = new Playlist();
+
 app.get('/playlist/filter', (req, res) => {
   const { artist } = req.query;
-  const filteredPlaylist = playlist.filter(
+  const filteredPlaylist = yourPlaylist.songs.filter(
     (song) =>
       song.artists && song.artists.toLowerCase().includes(artist.toLowerCase())
   );
@@ -26,7 +53,7 @@ app.get('/playlist/filter', (req, res) => {
 });
 
 app.get('/playlist', (req, res) => {
-  res.json(playlist);
+  res.json(yourPlaylist.songs);
 });
 
 app.get('/playlist/other-playlist', (req, res) => {
@@ -39,19 +66,27 @@ app.get('/songs', (req, res) => {
 
 app.post('/playlist/add', (req, res) => {
   const { image, title, artists, url } = req.body;
-  const newSong = { image, title, artists, url };
-  playlist.push(newSong);
-  res.json({ message: 'Song added to playlist', song: newSong });
+  yourPlaylist.addSong(image, title, artists, url);
+  res.json({
+    message: 'Music berhasil ditambahkan ke Your Playlist',
+    song: yourPlaylist.songs[yourPlaylist.songs.length - 1],
+  });
 });
 
 app.get('/playlist/play/:index', (req, res) => {
   const index = parseInt(req.params.index);
-  if (index >= 0 && index < playlist.length) {
-    const song = playlist[index];
-    res.json({ message: 'Playing song', song });
+  if (index >= 0 && index < yourPlaylist.songs.length) {
+    const song = yourPlaylist.songs[index];
+    song.playCount++;
+    res.json({ message: 'Music Dimainkan', song });
   } else {
-    res.status(404).json({ message: 'Song not found' });
+    res.status(404).json({ message: 'Music Tidak Ditemukan' });
   }
+});
+
+app.get('/playlist/most-played', (req, res) => {
+  const sortedSongs = yourPlaylist.getMostPlayedSongs();
+  res.json(sortedSongs);
 });
 
 app.listen(port, () => {

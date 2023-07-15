@@ -30,7 +30,6 @@
    - Judul Lagu	: Fearless
    - URL	: ./src/assets/audio/tswift-fearless.mp3
 
-
 7. - Gambar	: https://i.scdn.co/image/ab6761610000e5eb8ae7f2aaa9817a704a87ea36
    - Artist	: Justin Bieber
    - Judul Lagu	: Ghost
