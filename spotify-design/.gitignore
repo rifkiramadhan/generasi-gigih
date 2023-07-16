@@ -1,3 +1,6 @@
-/src/js/async-await.js
-/src/js/fetch-api-async-await.js
+/src/js/asyncAwait.js
+/src/js/fetchApiAsyncAwait.js
+/src/js/fetchApiNoSongs.js
+/src/js/fetchApiSongs.js
 /src/assets/audio/*.mp3
+

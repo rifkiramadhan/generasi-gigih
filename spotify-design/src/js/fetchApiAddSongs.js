@@ -64,34 +64,34 @@ const createSleepCard = (sleepCard) => {
   return sleepPlaylistCard;
 };
 
-// fungsi untuk menambah count playlist song dari Your Playlist
+// Fungsi untuk menambah count playlist song dari Your Playlist
 const playPlaylistSong = (index) => {
   if (index === undefined) {
-    console.error('Invalid song index');
+    console.error('Indeks lagu tidak valid');
     return;
   }
 
   fetch(`http://localhost:3000/playlist/play/${index}`)
     .then((response) => response.json())
-    .then((data) => {
-      if (data.message === 'Music Tidak Ditemukan') {
+    .then((playMusic) => {
+      if (playMusic.message === 'Music Tidak Ditemukan') {
         console.log('Music Tidak Ditemukan');
       } else {
-        console.log('Music Dimainkan:', data);
+        console.log('Music Dimainkan:', playMusic);
 
-        // Update play count dynamically
+        // Perbarui jumlah pemutaran secara dinamis
         const playlistCards = document.querySelectorAll('.cards');
         const playlistCard = playlistCards[index];
         const playCount = playlistCard.querySelector('.play-count');
 
         if (playCount) {
-          const newPlayCount = data.song.playCount;
+          const newPlayCount = playMusic.song.playCount;
           playCount.textContent = `Diputar ${newPlayCount} Kali`;
         }
       }
     })
     .catch((error) => {
-      console.error('An error occurred while playing the song:', error);
+      console.error('Terjadi kesalahan saat memutar lagu: ', error);
     });
 };
 
@@ -102,12 +102,12 @@ const getPlaylistCard = () => {
 
   fetch('http://localhost:3000/playlist')
     .then((response) => response.json())
-    .then((displayPlaylist) => {
-      if (Array.isArray(displayPlaylist) && displayPlaylist.length > 0) {
+    .then((playList) => {
+      if (Array.isArray(playList) && playList.length > 0) {
         const playlistContainer = document.querySelector('#yourPlaylist');
         playlistContainer.innerHTML = '';
 
-        displayPlaylist.forEach((item, index) => {
+        playList.forEach((item, index) => {
           const playlistCard = createOtherPlaylistCard(item);
           playlistContainer.appendChild(playlistCard);
 
@@ -138,7 +138,7 @@ const getPlaylistCard = () => {
             audioPlayer.appendChild(sourceElement);
 
             audioPlayer.play();
-            playPlaylistSong(index); // Call playPlaylistSong function to play the song with a specific index
+            playPlaylistSong(index);
           });
         });
 
@@ -150,7 +150,10 @@ const getPlaylistCard = () => {
       }
     })
     .catch((error) => {
-      console.error('Error displaying Spotify Playlist:', error.message);
+      console.error(
+        'Kesalahan menampilkan Daftar Putar Spotify :',
+        error.message
+      );
     });
 };
 
@@ -161,10 +164,10 @@ const getBannersAndOtherPlaylistCard = () => {
 
   fetch('http://localhost:3000/playlist/other-playlist')
     .then((response) => response.json())
-    .then((data) => {
-      if (Array.isArray(data.banners)) {
+    .then((bannersAndOtherPlaylist) => {
+      if (Array.isArray(bannersAndOtherPlaylist.banners)) {
         const bannerContainer = document.querySelector('.banner');
-        data.banners.forEach((item) => {
+        bannersAndOtherPlaylist.banners.forEach((item) => {
           const bannerCard = document.createElement('div');
           bannerCard.className = 'song';
           bannerCard.innerHTML = `
@@ -176,11 +179,11 @@ const getBannersAndOtherPlaylistCard = () => {
         });
       }
 
-      if (Array.isArray(data.artists)) {
+      if (Array.isArray(bannersAndOtherPlaylist.artists)) {
         const playlistContainer = document.querySelector('#genres');
         playlistContainer.innerHTML = '';
 
-        data.artists.forEach((item) => {
+        bannersAndOtherPlaylist.artists.forEach((item) => {
           const playlistCard = createGenresPlaylistCard(item);
           playlistContainer.appendChild(playlistCard);
 
@@ -212,7 +215,10 @@ const getBannersAndOtherPlaylistCard = () => {
       loadingElement.style.display = 'none';
     })
     .catch((error) => {
-      console.error('Error displaying Spotify Playlist:', error.message);
+      console.error(
+        'Kesalahan menampilkan Daftar Putar Spotify :',
+        error.message
+      );
 
       loadingElement.style.display = 'none';
     });
@@ -272,7 +278,10 @@ const getWorkAndSleepSongsCard = () => {
       }
     })
     .catch((error) => {
-      console.error('Error displaying Work and Sleep Songs:', error.message);
+      console.error(
+        'Kesalahan menampilkan Lagu Kerja dan Tidur :',
+        error.message
+      );
     });
 };
 
@@ -323,12 +332,12 @@ const searchPlaylist = (event) => {
 
   fetch('http://localhost:3000/playlist')
     .then((response) => response.json())
-    .then((displayPlaylist) => {
-      if (Array.isArray(displayPlaylist)) {
+    .then((playList) => {
+      if (Array.isArray(playList)) {
         const playlistContainer = document.querySelector('#yourPlaylist');
         playlistContainer.innerHTML = '';
 
-        displayPlaylist.forEach((item) => {
+        playList.forEach((item, index) => {
           if (
             item.artists.toLowerCase().includes(searchTerm) ||
             item.title.toLowerCase().includes(searchTerm)
@@ -363,17 +372,20 @@ const searchPlaylist = (event) => {
       }
     })
     .catch((error) => {
-      console.error('Error displaying Spotify Playlist:', error.message);
+      console.error(
+        'Kesalahan menampilkan Daftar Putar Spotify :',
+        error.message
+      );
     });
 
   fetch('http://localhost:3000/playlist/other-playlist')
     .then((response) => response.json())
-    .then((displayOtherPlaylist) => {
-      if (Array.isArray(displayOtherPlaylist.artists)) {
+    .then((otherPlaylist) => {
+      if (Array.isArray(otherPlaylist.artists)) {
         const playlistOtherContainer = document.querySelector('#genres');
         playlistOtherContainer.innerHTML = '';
 
-        displayOtherPlaylist.artists.forEach((item) => {
+        otherPlaylist.artists.forEach((item) => {
           if (
             item.artist.toLowerCase().includes(searchTerm) ||
             item.description.toLowerCase().includes(searchTerm)
@@ -408,7 +420,10 @@ const searchPlaylist = (event) => {
       }
     })
     .catch((error) => {
-      console.error('Error displaying Spotify Playlist:', error.message);
+      console.error(
+        'Kesalahan menampilkan Daftar Putar Spotify :',
+        error.message
+      );
     });
 
   fetch('http://localhost:3000/songs')
@@ -473,7 +488,10 @@ const searchPlaylist = (event) => {
       }
     })
     .catch((error) => {
-      console.error('Error displaying Work and Sleep Songs:', error.message);
+      console.error(
+        'Kesalahan menampilkan Lagu Work and Sleep Songs:',
+        error.message
+      );
     });
 };
 

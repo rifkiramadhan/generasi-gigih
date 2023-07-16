@@ -1,3 +1,4 @@
+// Sample code before splitting and before using try catch
 const express = require('express');
 const cors = require('cors');
 const app = express();
