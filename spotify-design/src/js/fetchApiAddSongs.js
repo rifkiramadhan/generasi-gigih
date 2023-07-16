@@ -8,7 +8,7 @@ const createEmptyPlaylist = () => {
   playlistContainer.appendChild(emptyMessage);
 };
 
-// Fungsi uk mmbuat other card playlist
+// Fungsi untuk mmbuat other card playlist
 const createOtherPlaylistCard = (otherPlaylistCard) => {
   const playlistCard = document.createElement('div');
   playlistCard.className = 'cards';
