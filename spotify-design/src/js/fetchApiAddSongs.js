@@ -24,7 +24,7 @@ const createOtherPlaylistCard = (otherPlaylistCard) => {
   return playlistCard;
 };
 
-// Fungsi untuk membuat gendres playlist card
+// Fungsi untuk membuat genres playlist card
 const createGenresPlaylistCard = (genresPlaylistCard) => {
   const playlistGenresCard = document.createElement('div');
   playlistGenresCard.className = 'cards';
