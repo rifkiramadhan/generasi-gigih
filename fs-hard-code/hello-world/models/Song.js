@@ -8,4 +8,4 @@ class Song {
   }
 }
 
-module.exports = Songs;
+module.exports = Song;
