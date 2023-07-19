@@ -1,3 +1,5 @@
+const Song = require('./Song');
+
 class Playlist {
   constructor(songs) {
     this.songs = Array.isArray(songs) ? songs : [];
@@ -18,16 +20,6 @@ class Playlist {
 
   getMostPlayedSongs() {
     return this.songs.sort((a, b) => b.playCount - a.playCount);
-  }
-}
-
-class Song {
-  constructor(image, title, artists, url) {
-    this.image = image;
-    this.title = title;
-    this.artists = artists;
-    this.url = url;
-    this.playCount = 0;
   }
 }
 

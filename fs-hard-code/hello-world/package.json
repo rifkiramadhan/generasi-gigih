@@ -2,10 +2,10 @@
   "name": "hello-world",
   "version": "1.0.0",
   "description": "- [Documentasi API](https://documenter.getpostman.com/view/10749611/2s946fdsQT)",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon index.js"
   },
   "author": "Rifki Ramadhan",
   "license": "ISC",
