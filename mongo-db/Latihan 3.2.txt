@@ -1,0 +1,43 @@
+Spootify Query
+Write query for:
+1. Write To Top 30 songs (insert)
+2. The songs can have one or more artist
+3. The list of song can be sort by artist name, release date, most played song
+4. App can show all geenre all list song by genre
+5. App can search song by artist name, song name (can search without writing the full title / artist
+   name), and can be sort like question number 3 (Jabarin semua kemungkinan query, contoh filter song sort by release)
+
+db.songs.insertMany([
+  { "title": "Menunggu", "artists": ["Isyana Sarasvati"], "genre": "Pop", "release_date": ISODate("2023-07-18"), "play_count": 10000 },
+  { "title": "Bertaut", "artists": ["Raisa"], "genre": "Pop", "release_date": ISODate("2023-07-19"), "play_count": 8000 },
+  { "title": "Mata Ke Hati", "artists": ["Raisa"], "genre": "Pop", "release_date": ISODate("2023-07-24"), "play_count": 9800 },
+  { "title": "Jangan Marah Marah", "artists": ["Mahen"], "genre": "Pop", "release_date": ISODate("2023-07-25"), "play_count": 10500 },
+  { "title": "Cinta Dalam Hati", "artists": ["Andra and The Backbone"], "genre": "Rock", "release_date": ISODate("2023-07-26"), "play_count": 7200 },
+  { "title": "Peluang Kedua", "artists": ["Ari Lasso"], "genre": "Pop", "release_date": ISODate("2023-07-27"), "play_count": 8900 },
+  { "title": "Dia", "artists": ["Anji"], "genre": "Pop", "release_date": ISODate("2023-07-28"), "play_count": 9400 },
+  { "title": "Katakan Saja", "artists": ["Khansa"], "genre": "Pop", "release_date": ISODate("2023-07-29"), "play_count": 8600 },
+  { "title": "Perahu Kertas", "artists": ["Maudy Ayunda"], "genre": "Pop", "release_date": ISODate("2023-07-30"), "play_count": 8200 },
+  { "title": "Seperti Yang Kau Minta", "artists": ["Chrisye"], "genre": "Pop", "release_date": ISODate("2023-07-31"), "play_count": 7800 },
+  { "title": "Jangan Datang Malam Ini", "artists": ["Pongki Barata"], "genre": "Pop", "release_date": ISODate("2023-08-01"), "play_count": 7100 },
+  { "title": "Lelaki Hebat", "artists": ["Tulus"], "genre": "Pop", "release_date": ISODate("2023-08-02"), "play_count": 9700 },
+  { "title": "Aku dan Dirimu", "artists": ["Ari Lasso", "Bunga Citra Lestari"], "genre": "Pop", "release_date": ISODate("2023-08-03"), "play_count": 9200 },
+  { "title": "Bintang Kehidupan", "artists": ["Nike Ardilla"], "genre": "Pop", "release_date": ISODate("2023-08-04"), "play_count": 8300 },
+  { "title": "Sempurna", "artists": ["Andra and The Backbone"], "genre": "Rock", "release_date": ISODate("2023-08-05"), "play_count": 7600 },
+  { "title": "Mungkin Nanti", "artists": ["Peterpan"], "genre": "Pop", "release_date": ISODate("2023-08-06"), "play_count": 9300 },
+  { "title": "Mungkinkah", "artists": ["Stinky"], "genre": "Rock", "release_date": ISODate("2023-08-07"), "play_count": 7900 },
+  { "title": "Pergilah Kasih", "artists": ["Chrisye"], "genre": "Pop", "release_date": ISODate("2023-08-08"), "play_count": 8800 },
+  { "title": "Tentang Rindu", "artists": ["Virzha"], "genre": "Pop", "release_date": ISODate("2023-08-09"), "play_count": 8400 },
+  { "title": "Bila Rasaku Ini Rasamu", "artists": ["Kerispatih", "Sammy Simorangkir"], "genre": "Pop", "release_date": ISODate("2023-08-10"), "play_count": 9900 },
+  { "title": "Kisah Romantis", "artists": ["Glenn Fredly"], "genre": "Pop", "release_date": ISODate("2023-08-11"), "play_count": 9100 },
+  { "title": "Cukup Siti Nurbaya", "artists": ["Dewa 19"], "genre": "Rock", "release_date": ISODate("2023-08-12"), "play_count": 7700 },
+  { "title": "Jika", "artists": ["Melly Goeslaw", "Ari Lasso"], "genre": "Pop", "release_date": ISODate("2023-08-13"), "play_count": 9300 },
+  { "title": "Sampai Kapan", "artists": ["Astrid"], "genre": "Pop", "release_date": ISODate("2023-08-14"), "play_count": 8100 },
+  { "title": "Demi Cinta", "artists": ["Andra and The Backbone"], "genre": "Rock", "release_date": ISODate("2023-08-15"), "play_count": 7500 },
+  { "title": "Dewi", "artists": ["Dewa 19"], "genre": "Rock", "release_date": ISODate("2023-08-16"), "play_count": 7900 },
+  { "title": "Mungkin", "artists": ["Potret"], "genre": "Pop", "release_date": ISODate("2023-08-17"), "play_count": 8600 },
+  { "title": "Cobalah Mengerti", "artists": ["Peterpan", "Momo Geisha"], "genre": "Pop", "release_date": ISODate("2023-08-18"), "play_count": 9500 },
+  { "title": "Maha Bebas", "artists": ["Armada"], "genre": "Pop", "release_date": ISODate("2023-08-19"), "play_count": 8200 },
+  { "title": "Luka Lama", "artists": ["Rita Sugiarto"], "genre": "Pop", "release_date": ISODate("2023-08-20"), "play_count": 7900 }
+]);
+
+db.songs.find({ "title": { $regex: "Raisa", $options: "i" } });

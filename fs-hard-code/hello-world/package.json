@@ -1,19 +1,17 @@
 {
   "name": "hello-world",
   "version": "1.0.0",
-  "description": "Hello World",
+  "description": "- [Documentasi API](https://documenter.getpostman.com/view/10749611/2s946fdsQT)",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "author": "Rifki Ramadhan",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mongoose": "^7.3.3",
-    "multer": "*",
     "nodemon": "^3.0.1"
   }
 }
