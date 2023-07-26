@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real Time Comments</title>
+  </head>
+  <body>
+    <div id="comments"></div>
+
+    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io('http://localhost:5000');
+
+      // Request Notification Permission
+      Notification.requestPermission().then(function (permission) {
+        console.log('Notification permission: ', permission);
+      });
+
+      socket.on('comments', function (comments) {
+        const commentsDiv = document.getElementById('comments');
+        const latestComment = comments[comments.length - 1]; // get the latest comment
+
+        const commentElement = document.createElement('p');
+        commentElement.textContent =
+          latestComment.username + ': ' + latestComment.comment;
+
+        commentsDiv.innerHTML = ''; // clear out any existing comments
+        commentsDiv.appendChild(commentElement); // append only the latest comment
+
+        // Send Notification
+        if (Notification.permission === 'granted') {
+          const notification = new Notification('New Comment', {
+            body: `${latestComment.username}: ${latestComment.comment}`,
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

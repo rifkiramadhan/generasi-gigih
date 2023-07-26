@@ -1,13 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
 const port = 3000;
+const mongoString = process.env.DB_URL;
 
-const url = 'mongodb://localhost:27017';
-const dbName = 'music_database';
+dotenv.config();
+
+// const url = 'mongodb://localhost:27017';
+// const dbName = 'music_database';
 app.use(cors());
 
 // Middleware
@@ -68,8 +72,7 @@ const Popular = mongoose.model('Popular', popularSchema, 'popular');
 const Artist = mongoose.model('Artist', artistSchema, 'artists');
 
 mongoose
-  .connect(`${url}/${dbName}`, {
-    useNewUrlParser: true,
+  .connect(mongoString, {
     useUnifiedTopology: true,
     family: 4,
   })
