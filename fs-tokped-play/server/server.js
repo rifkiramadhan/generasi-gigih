@@ -4,6 +4,10 @@ const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const socketIo = require('socket.io');
+const dbConnect = require('./config/dbConnect');
+
+// Get dbConnect
+dbConnect();
 
 // Configurations
 dotenv.config();
@@ -23,9 +27,6 @@ const io = socketIo(server, {
 // Middleware setup
 app.use(cors());
 app.use(express.json());
-
-// Import models
-require('./models/db');
 
 // import routes
 const videoRoutes = require('./routes/videos');
