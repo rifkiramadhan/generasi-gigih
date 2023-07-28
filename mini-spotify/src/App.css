@@ -61,10 +61,13 @@ body {
 
 .container aside .menu a span {
   margin-right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .container aside .menu a span.spotify_text {
-  font-size: 26px;
+  font-size: 25px;
 }
 
 .container aside .menu a.active {
@@ -366,7 +369,6 @@ body {
   bottom: 0;
   padding: var(--padding);
   border-top: 1px solid var(--color-blackish-grey);
-  color: var(--color-white);
 }
 
 .container footer .audio {

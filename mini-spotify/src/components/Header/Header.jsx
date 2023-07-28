@@ -1,18 +1,14 @@
 import React from 'react';
-import prevIcon from '../../assets/images/prev.svg';
-import nextIcon from '../../assets/images/next.svg';
-import userIcon from '../../assets/images/user.svg';
-import salirIcon from '../../assets/images/salir.svg';
 
-function Header() {
+const Header = ({ header }) => {
   return (
     <header>
       <div className='prev_next_buttons'>
         <span className='btn_prev'>
-          <img src={prevIcon} alt='' />
+          <img src={header.prevIcon} alt='' />
         </span>
         <span className='btn_next'>
-          <img src={nextIcon} alt='' />
+          <img src={header.nextIcon} alt='' />
         </span>
       </div>
       <div className='subscription'>
@@ -21,16 +17,16 @@ function Header() {
         </div>
         <div className='profile'>
           <span className='circle'>
-            <img src={userIcon} alt='' />
+            <img src={header.userIcon} alt='' />
           </span>
-          <span className='name'>User</span>
+          <span className='name'>{header.username}</span>
           <span>
-            <img src={salirIcon} alt='' />
+            <img src={header.salirIcon} alt='' />
           </span>
         </div>
       </div>
     </header>
   );
-}
+};
 
 export default Header;

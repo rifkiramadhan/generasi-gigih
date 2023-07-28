@@ -1,19 +1,32 @@
 import React from 'react';
 import { Sidebar, Header, Banner, Content, Footer } from './components';
+import {
+  songsData,
+  workPlaylists,
+  sleepPlaylists,
+  bannerData,
+  footerData,
+  sidebarData,
+  headerData,
+} from './dataDummy';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <div className='container'>
-      <Sidebar />
+      <Sidebar menuItems={sidebarData} />
       <section>
-        <Header />
-        <Banner />
-        <Content />
+        <Header header={headerData} />
+        <Banner banners={bannerData} />
+        <Content
+          songs={songsData}
+          workPlaylists={workPlaylists}
+          sleepPlaylists={sleepPlaylists}
+        />
       </section>
-      <Footer />
+      <Footer footer={footerData} />
     </div>
   );
-}
+};
 
 export default App;

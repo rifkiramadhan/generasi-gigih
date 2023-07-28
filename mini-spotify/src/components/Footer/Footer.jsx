@@ -1,27 +1,25 @@
 import React from 'react';
-import anjiImage from '../../assets/images/anji.jpeg';
-import anjiMusic from '../../assets/audio/anji-dia.mp3';
 
-function Footer() {
+const Footer = ({ footer }) => {
   return (
     <footer>
       <div className='audio'>
         <div className='audio-player'>
           <div className='track-info'>
-            <img src={anjiImage} alt='Cover Art' />
+            <img src={footer.img} alt='Cover Art' />
             <div className='track-details'>
-              <h3 className='track-title'>Anji</h3>
-              <p className='artist-name'>Dia</p>
+              <h3 className='track-title'>{footer.title}</h3>
+              <p className='artist-name'>{footer.song}</p>
             </div>
           </div>
           <audio controls>
-            <source src={anjiMusic} type='audio/mpeg' />
+            <source src={footer.music} type='audio/mpeg' />
             Your browser does not support the audio element.
           </audio>
         </div>
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
