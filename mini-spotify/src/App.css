@@ -160,19 +160,24 @@ body {
   z-index: 2;
 }
 
-.container section header .subscription .profile .circle {
-  background-color: var(--color-dark-gray);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.circle,
 .name {
   margin-right: 5px;
+}
+
+.name a {
+  text-decoration: none;
+  color: var(--color-white);
+  font-weight: bold;
+  padding: 5px;
+}
+
+.name button {
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px;
 }
 
 .container section .gradient_container,
@@ -299,6 +304,14 @@ body {
   align-items: center;
   padding: 0 20px;
   width: calc(100% - 80px);
+}
+
+.container section .content_container .genres .cards .card_text h4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .container section .content_container .genres .cards .card_text img {
