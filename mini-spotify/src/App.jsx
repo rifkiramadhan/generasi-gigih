@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar, Header, Banner, Content, Footer } from './components';
+import {
+  CLIENT_ID,
+  REDIRECT_URI,
+  AUTH_ENDPOINT,
+  RESPONSE_TYPE,
+} from './config/config';
 import './App.css';
 import axios from 'axios';
 
 const App = () => {
-  const CLIENT_ID = process.env.CLIENT_ID;
-  const REDIRECT_URI = process.env.REDIRECT_URI;
-  const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
-  const RESPONSE_TYPE = 'token';
-
   const [token, setToken] = useState('');
   const [searchKey, setSearchKey] = useState('');
   const [artists, setArtists] = useState([]);

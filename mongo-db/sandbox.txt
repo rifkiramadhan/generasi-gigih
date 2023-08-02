@@ -1,0 +1,3 @@
+Import array from data.js
+Create a list of recipes from this array
+For each recipe in the array, display its name as on <h1> and list its ingradients in a <ul>

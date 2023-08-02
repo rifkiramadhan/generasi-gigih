@@ -1,0 +1,39 @@
+The Topic Is: Solving a computer problem (because the performance slows down)
+
+Partner 1 (Adam): My computer has been running really slow lately. What do you think I should do?
+
+
+Partner 2 (Dany): There could be many reasons for this issue, Adam. It might be due to low storage space, 
+too many running applications, or even a virus.
+
+
+Adam: What do you mean by "too many running applications"?
+
+
+Dany: To clarify, your computer might slow down if you have too many programs or applications 
+open at the same time, because they use your computer's memory and processing power.
+
+
+Adam: So I should close some applications?
+
+
+Dany: In other words, yes, try to keep only the applications that you're actively using open. 
+Also, ensure that there aren't any unnecessary programs running in the background.
+
+
+Adam: I see, and how about the low storage space?
+
+
+Dany: Let me explain that in more detail. If your hard drive is almost full, 
+it can cause your computer to slow down. You might need to delete some unnecessary 
+files or move them to external storage.
+
+
+Adam: Got it. And what should I do if it's a virus?
+
+
+Dany: To put it simply, you should run an antivirus scan. If the scan finds any threats, 
+the software will quarantine or remove them.
+
+
+Adam: Thank you for your advice. I’ll do it.

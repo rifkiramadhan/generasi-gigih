@@ -1,7 +1,9 @@
 import './App.css';
 import React from 'react';
 // import ParentComponent from './components/ParentComponent';
-import Person from './components/Person';
+// import Person from './components/Person';
+// import Family from './components/Family';
+import RecipeList from './components/RecipeList';
 
 // const avatars = [
 //   {
@@ -16,21 +18,23 @@ import Person from './components/Person';
 //   },
 // ];
 
-const people = [
-  { name: 'Alice', gender: 'female' },
-  { name: 'Bob', gender: 'male' },
-  { name: 'Carol', gender: 'female' },
-  { name: 'David', gender: 'male' },
-];
+// const people = [
+//   { name: 'Alice', gender: 'female' },
+//   { name: 'Bob', gender: 'male' },
+//   { name: 'Carol', gender: 'female' },
+//   { name: 'David', gender: 'male' },
+// ];
 
 function App() {
   return (
     <div className='App'>
       <header className='App-header'>
         {/* <ParentComponent avatars={avatars} />; */}
-        {people.map((person, index) => (
+        {/* {people.map((person, index) => (
           <Person key={index} person={person} />
-        ))}
+        ))} */}
+        {/* <Family /> */}
+        <RecipeList />
       </header>
     </div>
   );

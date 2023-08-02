@@ -12,6 +12,8 @@ const Header = ({
   setSearchKey,
   searchArtists,
 }) => {
+  console.log('clientId:', clientId);
+  console.log('redirectUri:', redirectUri);
   return (
     <header>
       <div className='prev_next_buttons'>
