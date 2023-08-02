@@ -19,6 +19,7 @@ import searchImage from './assets/images/search.svg';
 import libraryImage from './assets/images/library.svg';
 import addImage from './assets/images/add.svg';
 import heartImage from './assets/images/heart.svg';
+import recImage from './assets/images/rec.png';
 import anjiMusic from './assets/audio/anji-dia.mp3';
 import prevIcon from './assets/images/prev.svg';
 import nextIcon from './assets/images/next.svg';
@@ -86,11 +87,12 @@ export const footerData = {
 
 export const sidebarData = [
   { img: spotifyIcon, text: 'Spotify', link: '/spotify' },
-  { img: homeImage, text: 'Home', link: '#' },
+  { img: homeImage, text: 'Home', link: '/' },
   { img: searchImage, text: 'Search', link: '/search' },
   { img: libraryImage, text: 'Collection', link: '/collections' },
   { img: addImage, text: 'Create List', link: '/create-list' },
   { img: heartImage, text: 'You Like', link: '/you-like' },
+  { img: recImage, text: 'Recommendations', link: '/recomendations' },
 ];
 
 export const headerData = {

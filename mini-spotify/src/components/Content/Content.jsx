@@ -6,7 +6,7 @@ const Content = ({ songs, workPlaylists, sleepPlaylists, artists }) => {
   return (
     <article className='content_container'>
       <div className='titles'>
-        <h1>Spotify Playlist</h1>
+        <h2>Spotify Playlist</h2>
       </div>
 
       {artists.length === 0 ? (

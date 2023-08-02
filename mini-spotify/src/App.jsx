@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Sidebar, Header, Banner, Content, Footer } from './components';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
+import {
+  Sidebar,
+  Header,
+  Banner,
+  Content,
+  Footer,
+  Recommendations,
+} from './components';
 import {
   CLIENT_ID,
   REDIRECT_URI,
@@ -13,6 +20,8 @@ const App = () => {
   const [token, setToken] = useState('');
   const [searchKey, setSearchKey] = useState('');
   const [artists, setArtists] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   const [data, setData] = useState({
     songsData: [],
@@ -23,6 +32,49 @@ const App = () => {
     sidebarData: [],
     headerData: {},
   });
+
+  const handleSidebarItemClick = (e, item) => {
+    if (item.text === 'Recommendations') {
+      e.preventDefault();
+      handleRecommendationClick();
+      window.history.pushState({}, '', item.link);
+    }
+  };
+
+  const getRecommendations = useCallback(async () => {
+    try {
+      const { data } = await axios.get(
+        'https://api.spotify.com/v1/recommendations',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            limit: 21,
+            seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
+          },
+        }
+      );
+
+      setRecommendations(data.tracks);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    }
+  }, [token]);
+
+  const handleRecommendationClick = useCallback(() => {
+    getRecommendations();
+    setShowRecommendations(true);
+  }, [getRecommendations]);
 
   useEffect(() => {
     import('./dataDummy').then((importedData) => {
@@ -61,47 +113,65 @@ const App = () => {
 
   const searchArtists = async (e) => {
     e.preventDefault();
-    const { data } = await axios.get('https://api.spotify.com/v1/search', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        q: searchKey,
-        type: 'artist',
-      },
-    });
 
-    setArtists(data.artists.items);
+    if (searchKey.trim() !== '') {
+      const { data } = await axios.get('https://api.spotify.com/v1/search', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          q: searchKey,
+          type: 'artist',
+        },
+      });
+
+      setArtists(data.artists.items);
+    } else {
+      alert('Please enter a search keyword!');
+    }
   };
 
   return (
     <div className='container'>
-      {data.sidebarData.length > 0 && <Sidebar menuItems={data.sidebarData} />}
+      {data.sidebarData.length > 0 && (
+        <Sidebar
+          token={token}
+          menuItems={data.sidebarData}
+          onSidebarClick={handleSidebarItemClick}
+          onRecommendationClick={handleRecommendationClick}
+        />
+      )}
       <section>
-        {data.headerData.username && (
-          <Header
-            searchArtists={searchArtists}
-            setSearchKey={setSearchKey}
-            responseType={RESPONSE_TYPE}
-            authEndpoint={AUTH_ENDPOINT}
-            redirectUri={REDIRECT_URI}
-            clientId={CLIENT_ID}
-            token={token}
-            onLogout={logout}
-            header={data.headerData}
-          />
-        )}
-        {data.bannerData.length > 0 && <Banner banners={data.bannerData} />}
-        {data.songsData.length > 0 &&
-          data.workPlaylists.length > 0 &&
-          data.sleepPlaylists.length > 0 && (
+        {data.headerData.username &&
+        data.songsData.length > 0 &&
+        data.workPlaylists.length > 0 &&
+        data.sleepPlaylists.length > 0 &&
+        data.bannerData.length > 0 &&
+        showRecommendations &&
+        recommendations.length > 0 ? (
+          <Recommendations rec={recommendations} />
+        ) : (
+          <Fragment>
+            <Header
+              searchArtists={searchArtists}
+              setSearchKey={setSearchKey}
+              responseType={RESPONSE_TYPE}
+              authEndpoint={AUTH_ENDPOINT}
+              redirectUri={REDIRECT_URI}
+              clientId={CLIENT_ID}
+              token={token}
+              onLogout={logout}
+              header={data.headerData}
+            />
+            <Banner banners={data.bannerData} />
             <Content
               artists={artists}
               songs={data.songsData}
               workPlaylists={data.workPlaylists}
               sleepPlaylists={data.sleepPlaylists}
             />
-          )}
+          </Fragment>
+        )}
       </section>
       {data.footerData.song && <Footer footer={data.footerData} />}
     </div>
