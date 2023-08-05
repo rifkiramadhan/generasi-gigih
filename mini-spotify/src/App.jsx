@@ -242,7 +242,7 @@ const App = () => {
         showRecommendations &&
         recommendations.length > 0 ? (
           <Fragment>
-            <Recommendations rec={recommendations} />
+            <Recommendations recs={recommendations} onPlay={onPlay} />
             {loading && (
               <div className='loading'>
                 <img src={loadingGif} alt='Loading...' />

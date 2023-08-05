@@ -17,8 +17,8 @@ const Footer = ({ footer, audioRef, currentTrack }) => {
           <div className='track-info'>
             <img src={image} alt='Cover Art' />
             <div className='track-details'>
-              <h3 className='track-title'>{title}</h3>
-              <p className='artist-name'>{artist}</p>
+              <h3 className='track-title'>{artist}</h3>
+              <p className='track-name'>{title}</p>
             </div>
           </div>
           <audio ref={audioRef} controls>
