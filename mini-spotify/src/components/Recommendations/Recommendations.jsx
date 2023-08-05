@@ -9,8 +9,8 @@ const Recommendations = ({ rec }) => {
       </div>
 
       <div className='genres'>
-        {rec.map((track) => (
-          <div className='cards' key={track.id}>
+        {rec.map((track, index) => (
+          <div className='cards' key={track.id + index}>
             {track.album.images.length && (
               <div className='card_image'>
                 <img width={'100%'} src={track.album.images[0].url} alt='' />

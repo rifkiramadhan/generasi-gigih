@@ -603,9 +603,11 @@ audio::-webkit-media-controls-volume-slider:hover {
 }
 
 .loading img {
+  display: block;
   width: 100px;
   height: 100px;
   background: transparent;
+  background-image: none;
 }
 
 /* Responsive Modal */

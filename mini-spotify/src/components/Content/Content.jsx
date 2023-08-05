@@ -1,8 +1,9 @@
 import React from 'react';
 import { playIcon } from '../../dataDummy';
 import loadingImage from '../../../src/assets/gif/loading-image.gif';
+import PropTypes from 'prop-types';
 
-const Content = ({ songs, workPlaylists, sleepPlaylists, artists }) => {
+const Content = ({ songs, workPlaylists, sleepPlaylists, artists, onPlay }) => {
   return (
     <article className='content_container'>
       <div className='titles'>
@@ -26,7 +27,11 @@ const Content = ({ songs, workPlaylists, sleepPlaylists, artists }) => {
       ) : (
         <div className='genres'>
           {artists.map((artist) => (
-            <div className='cards' key={artist.id}>
+            <div
+              className='cards'
+              onClick={() => onPlay(artist.id)}
+              key={artist.id}
+            >
               {artist.images.length ? (
                 <div className='card_image'>
                   <img width={'100%'} src={artist.images[0].url} alt='' />
@@ -74,6 +79,10 @@ const Content = ({ songs, workPlaylists, sleepPlaylists, artists }) => {
       </div>
     </article>
   );
+};
+
+Content.propTypes = {
+  onPlay: PropTypes.func,
 };
 
 export default Content;

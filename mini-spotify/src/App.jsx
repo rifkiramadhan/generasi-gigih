@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  Fragment,
+  useRef,
+} from 'react';
+import loadingGif from './assets/gif/loading-image.gif';
 import {
   Sidebar,
   Header,
@@ -22,6 +29,10 @@ const App = () => {
   const [artists, setArtists] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const audioRef = useRef(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [data, setData] = useState({
     songsData: [],
@@ -42,6 +53,8 @@ const App = () => {
   };
 
   const getRecommendations = useCallback(async () => {
+    setLoading(true);
+
     try {
       const { data } = await axios.get(
         'https://api.spotify.com/v1/recommendations',
@@ -51,30 +64,45 @@ const App = () => {
           },
           params: {
             limit: 21,
+            offset: recommendations.length,
             seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
           },
         }
       );
 
-      setRecommendations(data.tracks);
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        console.log(error.request);
+      if (data.tracks.length > 0) {
+        setRecommendations((prevRecommendations) => [
+          ...prevRecommendations,
+          ...data.tracks,
+        ]);
       } else {
-        console.log('Error', error.message);
+        setHasMore(false);
       }
-      console.log(error.config);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-  }, [token]);
+  }, [token, recommendations]);
 
   const handleRecommendationClick = useCallback(() => {
     getRecommendations();
     setShowRecommendations(true);
   }, [getRecommendations]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+        !hasMore
+      )
+        return;
+      getRecommendations();
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore, getRecommendations]);
 
   useEffect(() => {
     import('./dataDummy').then((importedData) => {
@@ -115,19 +143,83 @@ const App = () => {
     e.preventDefault();
 
     if (searchKey.trim() !== '') {
-      const { data } = await axios.get('https://api.spotify.com/v1/search', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          q: searchKey,
-          type: 'artist',
-        },
-      });
+      setLoading(true);
 
-      setArtists(data.artists.items);
+      try {
+        const { data } = await axios.get('https://api.spotify.com/v1/search', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            q: searchKey,
+            type: 'artist',
+          },
+        });
+
+        setArtists(data.artists.items);
+
+        // Get songs for each artist
+        const songsPromises = data.artists.items.map((artist) =>
+          axios.get(
+            `https://api.spotify.com/v1/artists/${artist.id}/top-tracks?country=US`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+        );
+
+        const songsResponses = await Promise.all(songsPromises);
+        const songsData = songsResponses.reduce(
+          (songs, response) => [...songs, ...response.data.tracks],
+          []
+        );
+
+        setData((prevData) => ({
+          ...prevData,
+          songsData,
+        }));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     } else {
       alert('Please enter a search keyword!');
+    }
+  };
+
+  const onPlay = async (artistId) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=US`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Get the first song to play
+      if (data.tracks && data.tracks.length > 0) {
+        const song = data.tracks[0];
+        setCurrentTrack(song);
+        if (audioRef.current) {
+          audioRef.current.src = song.preview_url;
+          audioRef.current.load();
+          audioRef.current.play().catch((error) => {
+            console.error('Failed to start playback:', error);
+          });
+        }
+      } else {
+        alert('No top tracks available for this artist');
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -149,7 +241,14 @@ const App = () => {
         data.bannerData.length > 0 &&
         showRecommendations &&
         recommendations.length > 0 ? (
-          <Recommendations rec={recommendations} />
+          <Fragment>
+            <Recommendations rec={recommendations} />
+            {loading && (
+              <div className='loading'>
+                <img src={loadingGif} alt='Loading...' />
+              </div>
+            )}
+          </Fragment>
         ) : (
           <Fragment>
             <Header
@@ -163,17 +262,33 @@ const App = () => {
               onLogout={logout}
               header={data.headerData}
             />
-            <Banner banners={data.bannerData} />
-            <Content
-              artists={artists}
-              songs={data.songsData}
-              workPlaylists={data.workPlaylists}
-              sleepPlaylists={data.sleepPlaylists}
-            />
+            {loading ? (
+              <div className='loading'>
+                <img src={loadingGif} alt='Loading...' />
+              </div>
+            ) : (
+              <>
+                <Banner banners={data.bannerData} />
+                <Content
+                  artists={artists}
+                  songs={data.songsData}
+                  workPlaylists={data.workPlaylists}
+                  sleepPlaylists={data.sleepPlaylists}
+                  onPlay={onPlay}
+                />
+              </>
+            )}
           </Fragment>
         )}
       </section>
-      {data.footerData.song && <Footer footer={data.footerData} />}
+
+      {data.footerData.song && (
+        <Footer
+          footer={data.footerData}
+          audioRef={audioRef}
+          currentTrack={currentTrack}
+        />
+      )}
     </div>
   );
 };
